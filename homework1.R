@@ -90,3 +90,53 @@ q3d <-intToUtf8(new_int) #answer is L
 
 ########## Question 4 ##########
 
+toEncrypt<- "ANDREW"
+key<-5
+xor_encrypt<- function(toEncrypt, key){
+  for (elem in toEncrypt){
+    uToI<-utf8ToInt(elem)
+    bInt<-bitwXor(uToI,key)
+    encryptedL<-intToUtf8(bInt)
+    print(encryptedL)
+  }
+}
+xor_encrypt(toEncrypt, key) #answer will be DKAW@R
+
+toDecrypt<- "DKAW@R"
+key<-5
+xor_decrypt<- function(toDecrypt, key){
+  for (elem in toDecrypt){
+    uToI<-utf8ToInt(elem)
+    bInt<-bitwXor(uToI,key)
+    encryptedL<-intToUtf8(bInt)
+    print(encryptedL)
+  }
+}
+xor_decrypt(toDecrypt, key) #answer will be ANDREW
+
+########## Question 5 ##########
+toEncryptC<-"ANDREW"
+keyC<-10
+caesar_encrypt<- function(toEncryptC, keyC){
+  for (elemC in toEncryptC)
+  uToIC<-utf8ToInt(elemC)
+  encrypt_int<- uToIC-65+keyC
+  modded<-mod(encrypt_int,26)
+  new_int<-modded+65
+  encryptedLC<-intToUtf8(new_int)
+  print(encryptedLC)
+}
+encryptedC<-caesar_encrypt(toEncryptC, keyC) #answer will be KXNBOG
+
+toDecryptC<-"KXNBOG"
+keyC<-10
+caesar_decrypt<- function(toDecryptC, keyC){
+  for (elemC in toDecryptC)
+    uToIC<-utf8ToInt(elemC)
+    encrypt_int<- uToIC-65-keyC
+    modded<-mod(encrypt_int,26)
+    new_int<-modded+65
+    decryptedLC<-intToUtf8(new_int)
+    print(decryptedLC)
+}
+decryptedC<-caesar_decrypt(toDecryptC, keyC) #answer will be ANDREW
