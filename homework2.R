@@ -3,23 +3,26 @@
 #1a
 ptext = "Members of the Senate and of the House of Representatives of the United States, I feel greatly honored that you should have thus invited me to enter the United States Senate Chamber and address the representatives of both branches of Congress. The fact that my American forebears have for so many generations played their part in the life of the United States, and that here I am, an Englishman, welcomed in your midst, makes this experience one of the most moving and thrilling in my life, which is already long and has not been entirely uneventful. I wish indeed that my mother, whose memory I cherish, across the vale of years, could have been here to see. By the way, I cannot help reflecting that if my father had been American and my mother British instead of the other way around, I might have got here on my own. In that case this would not have been the first time you would have heard my voice. In that case I should not have needed any invitation. But if I had it is hardly likely that it would have been unanimous. So perhaps things are better as they are."
 
-#1e
+#1e, takes out spaces
 char_vec = gsub(pattern = " ", replacement = "", x = ptext, fixed = TRUE)
 
-#1e
+#1e, takes out commas
 char_vec = gsub(pattern = ",", replacement = "", x = char_vec, fixed = TRUE)
 
-#1e
+#1e, takes out periods
 char_vec = gsub(pattern = ".", replacement = "", x = char_vec, fixed = TRUE)
 
-#1e
+#1e, makes all characters uppercase
 char_vec = toupper(char_vec)
 
-#1b/c
+#1b/c, unlists and string splits
 words = unlist(strsplit(char_vec, ""))
 
 #1f
 table(words)
+#output = words
+# A   B   C   D   E   F   G   H   I   K   L   M   N   O   P   R   S   T   U   V   W   X   Y 
+# 72  14  17  33 126  22  11  66  59   2  25  28  62  53   8  46  51  86  20  16  10   1  24 
 
 #1g
 key = "ZGYHXIWJVKULTMSARBQCPDOENF"
