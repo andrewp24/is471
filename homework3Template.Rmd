@@ -1,0 +1,91 @@
+---
+title: 'IS 471: Spring 2018'
+subtitle: Homework 3
+author: Student Name (STUDENT_ID)
+output:
+  pdf_document:
+    df_print: kable
+    fig_caption: yes
+    highlight: tango
+    number_sections: yes
+  word_document: default
+---
+
+Please write your code in R and submit your script and results for each of the following. Note that R does not accept 0 as an index for a vector. So every vector starts with 1. 
+
+1.	Find the 8 bit binary number for the following characters: "A", "t", "@", "17", "9", "&" [hint: use binary() in package compositions].
+```{r}
+# code goes here
+
+```
+
+2.	Find the decimal numbers for the following: "00010110", "00011101", "01011011", "01100101", "00001010", "01100100".
+```{r warning=FALSE}
+# code goes here
+
+```
+
+3.	For the seed: "MHID9870"
+    a)	Create the UTF8 encoding.
+    ```{r}
+    # code goes here
+    
+    ```
+    b)	Create the 8 bit binary form for the results of a).
+    ```{r}
+    # code goes here
+    
+    ```
+    c)	Split the strings into individual bits.
+    ```{r}
+    # code goes here
+    
+    ```
+    d)	Unlist the result of c).
+    ```{r}
+    # code goes here
+    
+    ```
+    e)	Put the results of d) into one integer vector.
+    ```{r}
+    # code goes here
+    
+    
+    ```
+  
+4.	Fill three variables x, y, and z with the results of 3 such that x gets the first 19, y gets the next 22, and z gets the last 23 bits. Initialize an integer vector k of length 128.
+    ```{r}
+    # code goes here
+    
+    ```
+
+5.	Find the majority value for x[9], y[11] and z[11]. 
+    ```{r}
+    # code goes here
+    
+    ```
+6.	Write code for the following: if x steps then shift x to the right by 1 bit. Next assign the appropriate value to x[1]. Do the same for y and z.
+    ```{r}
+    # code goes here
+    
+    ```
+7.	Create key stream bit by XOR-in the appropriate bits from x, y, and z vectors.
+    ```{r}
+    # code goes here
+    
+    ```
+8.	Write a function for the above and create a 128 bit key stream with the seed mentioned in question 3. You function should contain two parameters: a seed and a key length.
+    ```{r}
+    # code goes here
+    
+    ```
+9.	Create an integer vector S with values from 1-5. Swap elements 1 and 4. [Hint: use the swap() function in package seqinr.
+    ```{r}
+    # code goes here
+    
+    ```
+10.	Implement RC4 for generating key streams. You function should contain two parameters: a seed and a key length.
+    ```{r}
+    # code goes here
+    
+    ```
