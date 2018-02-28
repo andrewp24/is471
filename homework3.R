@@ -62,3 +62,20 @@ for (i in 1:23){
 k = vector(mode="integer", length = 128) #int [1:128] 0 0 0 0 0 0 0 0 0 ...
 
 ##### Question 5 #####
+
+print(x[9])
+print(y[11])
+print(z[11])
+
+my_mode = function(v){
+  freq_count = table(v)
+  max_idx = which.max(freq_count)
+  m = names(max_idx)
+  m
+}
+my_mode(c(x[9], y[11], z[11])) # answer: 1
+
+##### Question 6 #####
+
+if
+
