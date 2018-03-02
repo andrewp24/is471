@@ -287,7 +287,7 @@ S[3] = 3
 S[4] = 4
 S[5] = 5
 
-swapped = swap(S[4], S[1])
+swapped = swap(S[4], S[1]) #num [1:5] 4 2 3 1 5
 
 ##### Question 10 #####
 
