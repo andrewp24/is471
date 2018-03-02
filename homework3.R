@@ -159,41 +159,151 @@ keystreamBit=bitwXor(xorlast1, z2[23]) # answer is 1
 ##### Question 8 #####
 #function for the above
 
-a51_funcion = function(seed, keyLength) {
+a51_function <- function(seed, keyLength) {
   
   seedInt = utf8ToInt(seed)
   binarySeed = binary(seedInt, mb=7)
-  strsplitBinarySeed = strsplit(binarySeed, "") #8 times chr [1:8]
-  unlistBinarySeed = unlist(strsplitBinaryseed) #chr [1:64]
-  binaryAsInt = as.integer(c(unlistBinarySeed)) #int [1:64]
+  strsplitBinarySeed = strsplit(binarySeed, "")
+  unlistBinarySeed = unlist(strsplitBinarySeed)
+  binaryAsInt = as.integer(c(unlistBinarySeed))
   
-  x = vector(mode="integer", length = 19) #int [1:19] 0 1 0 0 1 1 0 1 0 1 ...
+  x = vector(mode="integer", length = 19)
   for (i in 1:19){
     x[i] = binaryAsInt[i]
   }
   
-  y = vector(mode="integer", length = 22) #int [1:22] 0 1 0 0 1 0 1 0 0 0 ...
+  y = vector(mode="integer", length = 22)
   for (i in 1:22){
     y[i] = binaryAsInt[i+19]
   }
   
-  z = vector(mode="integer", length = 23) #int [1:23] 0 1 1 1 0 0 0 0 0 1 ...
+  z = vector(mode="integer", length = 23)
   for (i in 1:23){
     z[i] = binaryAsInt[i+41]
   }
   
   k = vector(mode="integer", length = keyLength)
+  j = 1
+  for (elemk in k){
   
-  my_mode = function(v){
-    freq_count = table(v)
-    max_idx = which.max(freq_count)
-    m = names(max_idx)
-    m
+    my_mode = function(v){
+      freq_count = table(v)
+      max_idx = which.max(freq_count)
+      m = names(max_idx)
+      m
+    }
+    m = my_mode(c(x[9], y[11], z[11]))
+    
+    #if x9 is equal to my_mode which is 1, then it will step
+    
+    #setting copies of the vectors
+    x2 = x
+    y2 = y
+    z2 = z
+    
+    if (x[9]==m){
+      #x step
+      #xor the following x[14], x[17], x[18], x[19]
+      # xor the first two and then the last two, then xor the results of those two
+      xorx1=bitwXor(x[14], x[17])
+      xorx2=bitwXor(x[18], x[19])
+      xorx3=bitwXor(xorx1, xorx2)
+      #xor3 will be the new first value
+      
+      #should be able to make a function for these
+      i=1
+      for(elemx in x){
+        
+        if(i-1!=0){
+          x2[i] = x[i-1]
+        }
+        i=i+1
+      }
+      x2[1]=xorx3
+    }
+    if (y[11]==m){
+      #y steps
+      #xor the following: y[21], y[22]
+      xory=bitwXor(y[21], y[22])
+      #xory will be the new first value
+      
+      i=1
+      for(elemy in y){
+        
+        if(i-1!=0){
+          y2[i] = y[i-1]
+        }
+        i=i+1
+      }
+      y2[1]=xory
+    }
+    if (z[11]==m){
+      #z steps
+      #xor the following z[8], z[21], x[22], x[23]
+      # xor the first two and then the last two, then xor the results of those two
+      xorz1=bitwXor(z[8], z[21])
+      xorz2=bitwXor(z[22], z[23])
+      xorz3=bitwXor(xorz1, xorz2)
+      #xor3 will be the new first value
+      
+      i=1
+      for(elemz in z){
+        
+        if(i-1!=0){
+          z2[i] = z[i-1]
+        }
+        i=i+1
+      }
+      z2[1]=xorz3
+      
+    }
+    #last values of each vector will be xor'd
+    xorlast1=bitwXor(x2[19], y2[22])
+    keystreamBit=bitwXor(xorlast1, z2[23]) # answer is 1
+    print(keystreamBit)
+    k[j] = keystreamBit
+    j = j+1
+    
+    #resetting the x,y,z to have new sets
+    x = x2
+    y = y2
+    z = z2
+  
   }
-  m = my_mode(c(x[9], y[11], z[11]))
+  return(k)
+}
+
+keystream = a51_function("johnsons", 64)
+print(keystream) # 0 0 0 1 0 1 1 0 0 1 1 0 0 0 1 1 0 1 1 1 0 1 0 1 1 0 0 0 1 0 1 0 0 1 1 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 1 0 1 1 1 1 0 1 0 1 0 0 0 1
+
+##### Question 9 #####
+install.packages('seqinr')
+library(seqinr)
+
+S = vector(mode = "integer", length = 5)
+S[1] = 1
+S[2] = 2
+S[3] = 3
+S[4] = 4
+S[5] = 5
+
+swapped = swap(S[4], S[1])
+
+##### Question 10 #####
+
+rc4_function = function(seed, keyLength){
+  stateTable = vector(mode = "integer", length = 256)
+  keyTable = vector(mode = "integer", length = 256)
   
+  j = 1
+  for (i in 1:256){
+    stateTable[i] = i
+    keyTable[i] = mod(seed[mod(i,keyLength)], 256)
+  } 
   
   
 }
 
-a51_funcion("johnsons", 64)
+rc4_function("Complete", 256)
+
+library(numbers)
