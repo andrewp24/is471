@@ -1,0 +1,49 @@
+---
+title: 'IS 471: Spring 2018'
+subtitle: Homework 4
+output:
+  pdf_document:
+    df_print: kable
+    fig_caption: yes
+    highlight: tango
+    number_sections: yes
+  word_document: default
+---
+```{r global_options, include=FALSE}
+# knitr::opts_chunk$set(eval = FALSE, include = FALSE)
+```
+
+Please write your code in R and submit your script and results for each of the following. 
+
+1.	Store the following binary number as a character string s: "110011".  (10 points)
+```{r message=FALSE, warning=FALSE}
+# code goes here
+```
+2.	Convert this into a character vector v. (10 points)
+```{r}
+# code goes here
+```
+3.	Expand the character vector v to 8 bits as follows: swap v[3] and v[4] . (10 points)
+```{r}
+# code goes here
+```
+4.	Replicate v[3] and v[4] .  The result (call it ev) should be a character vector of size 8. (10 points)
+```{r}
+# code goes here
+```
+5.	Write a function called expand() that takes a binary vector of size 6 as input and returns a binary vector of size 8 as output. (20 points)
+```{r}
+# code goes here
+```
+6.	Create two character vectors S11 and S12 such that S11 contains the binary representations of the numbers (5,2,1,6,3,4,7,0), and S12 contains those of the numbers (1,4,6,2,0,7,5,3). (10 points)
+```{r}
+# code goes here
+```
+7.	Let b="1101". Extract the last three characters. Convert the last three characters into decimal and store it in a variable called tempVal.  Write an "if-then-else" statement such that if b[1] == 0 retrieve the value of S11[tempval]. If b[1]==1  retrieve the value of S12[tempval]  and store it in a variable tempRet. (10 points)
+```{r message=FALSE, warning=FALSE}
+# code goes here
+```
+8.	Write a function called S11_function that takes a block of 4-character binary (such as "1110") and, using the two s-boxes from question 6, returns a 3-character binary number using the logic that if the first character is "0" then use S11, otherwise use S12.  (20 points)
+```{r message=FALSE, warning=FALSE}
+# code goes here
+```
