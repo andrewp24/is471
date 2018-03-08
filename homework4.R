@@ -45,12 +45,12 @@ tempVal=c(tempVal[2:4])
 tempVal=paste(tempVal[1:3])
 tempVal=toString(c(tempVal[1], tempVal[2], tempVal[3]))
 tempVal=gsub(pattern = ", ", replacement = "", x = tempVal, fixed = TRUE)
-tempVal=strtoi(test, base=2)
+tempVal=strtoi(tempVal, base=2)
 
 if (b[1]==0) {
-  tempRet= s11[tempVal]
+  tempRet= s11[tempVal+1]
 } else {
-  tempRet= s12[tempVal]
+  tempRet= s12[tempVal+1]
 }
 
 ##### Question 8 #####
