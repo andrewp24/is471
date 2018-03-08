@@ -65,11 +65,11 @@ s11_function = function(binary_val){
   tempVal=strtoi(tempVal, base=2)
   
   if (b[1]==0) {
-    tempRet= s11[tempVal]
+    tempRet= s11[tempVal+1]
   } else {
-    tempRet= s12[tempVal]
+    tempRet= s12[tempVal+1]
   }
   
   return(tempRet)
 }
-s11_function("1001")
+s11_function("1000")
