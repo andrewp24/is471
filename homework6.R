@@ -1,4 +1,5 @@
 library(numbers)
+library(compositions)
 
 ##### Question 1 #####
 
@@ -31,7 +32,7 @@ m = modinv(d, n)
 
 sik = function(vec){
   vec_sum=sum(vec)
-  return(round(runif(1,min=vec_sum, max=vec_sum^2)))
+  return(round(runif(1,min=vec_sum, max=vec_sum^1.1)))
 }
 
 ##### Question 7 #####
@@ -48,6 +49,68 @@ print(s1)
 
 ##### Question 8 #####
 
+s1_sum=s1*P
+s1_sum=sum(s1_sum)
+increased_s1=round(s1_sum*1.1)
+print(increased_s1)
+n2=Primes(s1_sum+1,increased_s1)
+print(n2)
+n2=n2[1]
+print(s1_sum)
+print(n2)
+d2=Primes(40, 50)
+d2=d2[2]
+m2=modinv(d2,n2)
+new_s=vector(mode= 'integer', length=8)
+
 gk=function(s,m,n){
+  for (i in 1:length(s)){
+    new_s[i]=mod(s[i]*m,n)
+  }
+  return(new_s)
+}
+
+#tests=c(2,3,7,14,30,57,120,251)
+#test=gk(tests,41,491)
+#print(test)
+gen_knap=gk(s1,m2,n2)
+print(gen_knap)
+
+
+##### Question 9 #####
+#the private key is the s1.
+pk=modinv(m2,n2)
+temp=vector(mode= 'integer', length=8)
+
+encrypt_knapsack=function(g,p){
+  p=unlist(strsplit(p, ""))
+  tempVal=p
+  tempVal=c(tempVal)
+  tempVal=gsub(pattern = ", ", replacement = "", x = tempVal, fixed = TRUE)
+  tempVal=strtoi(tempVal, base=2)
   
+  temp=g*tempVal
+  temp_sum=sum(temp)
+  
+  
+  return(temp_sum)
+}
+
+C=encrypt_knapsack(gen_knap, "11100011") #170
+
+##### Question 10 #####
+
+new_q10_s=vector(mode= 'integer', length=8)
+q10_s=c(5,6,13,31,69,127,285,684)
+added=0
+q10_s=c(2,3,7,14,30,57,120,251)
+added=0
+
+for (i in length(q10_s):1){
+  if((q10_s[i]+added)>193){
+    new_q10_s[i]=0
+  } else {
+    added = q10_s[i] + added
+    new_q10_s[i]=1
+  }
 }
