@@ -4,13 +4,14 @@ library(seqinr)
 
 ##### Question 1 ######
 
-numbers = c(4,0,6,5,7,1,3,2)
-s11=binary(numbers) # [1] "100" "000" "110" "101" "111" "001" "011" "010"
-
-numbers2 = c(5,3,0,7,6,2,1,4)
-s12=binary(numbers2) # [1] "001" "100" "110" "010" "000" "111" "101" "011"
 
 s11_function = function(binary_val){
+  numbers = c(5,2,1,6,3,4,7,0)
+  s11=binary(numbers) # [1] "101" "010" "001" "110" "011" "100" "111" "000"
+  
+  numbers2 = c(1,4,6,2,0,7,5,3)
+  s12=binary(numbers2) # [1] "001" "100" "110" "010" "000" "111" "101" "011"
+  
   b=unlist(strsplit(as.character(binary_val), ""))
   tempVal=b
   tempVal=c(tempVal[2:4])
@@ -29,8 +30,15 @@ s11_function = function(binary_val){
   
   return(tempRet)
 }
+s11_function("1011")
 
 s12_function = function(binary_val){
+  numbers = c(4,0,6,5,7,1,3,2)
+  s11=binary(numbers) # [1] "100" "000" "110" "101" "111" "001" "011" "010"
+  
+  numbers2 = c(5,3,0,7,6,2,1,4)
+  s12=binary(numbers2) # [1] "001" "100" "110" "010" "000" "111" "101" "011"
+  
   b=unlist(strsplit(as.character(binary_val), ""))
   tempVal=b
   tempVal=c(tempVal[2:4])
@@ -49,7 +57,7 @@ s12_function = function(binary_val){
   
   return(tempRet)
 }
-s12_function("1000")
+s12_function("1011")
 
 ##### Question 2
 
@@ -147,7 +155,7 @@ round1 = function(binaryNum, key, enOrDe){
   return(paste(l1, r1, sep = ""))
 }
 
-test = round1("000001010011", "111000111", "E") #010011000101
+test = round1("000001010111", "001101100", "E") #010111100011
 
 ##### Question 3 ######
 
@@ -234,14 +242,10 @@ round2 = function(binaryNum, key, enOrDe){
   #print(l1)
   
   
-  return(paste(l2, r2, sep = ""))
+  return(paste(r2, l2, sep = ""))
 }
 
-test2 = round2(test, "111000111", "E") #010011101110
-test3=round1(test2,"111000111","D")
-test4=round2(test3,"111000111", "D")
-print(unbinary(test4))
-print(intToUtf8(unbinary(test4)))
+test2 = round2("000001010111", "001101100", "E") #101011010111
 
 ##### Question 4 ######
 
@@ -257,26 +261,30 @@ for (i in 1:length(message)) {
   e[i]=e2
 }
 e # the encrypted message
-print(unbinary(e))              #704 278 2433 1893 3807 1615 2496 2300 2300 2300 3807 1026 2703 3807 2964 2703 4028
-print(intToUtf8(unbinary(e)))   #??E???\u0765\u0edf?????\u08fc\u08fc\u08fc\u0edf?????\u0edf?????????
+print(unbinary(e))              #3811 2484 2334 2341 2835  929 2527  475  475  475 2835 2168 3018 2835  630 3018  598
+print(intToUtf8(unbinary(e)))   #\u0ee3\u09b4?????????????????UUU???\u0878?????????????
 
-##### Question 5 #####
 
-#do what the hint says. add an if statement which will change if encrypting or decrypting
-#gonna have to change the already created round1 and round2
+##### Question 5 #####2
 q5="Wire $2000 to Bob"
 q5=utf8ToInt(q5)
 q5=binary(q5,mb=11)             #000001010111 ....
-k=binary(108,mb=8)
+k=binary(108,mb=8)              #001101100
 d=vector(mode="character")
 
 for (i in 1:length(q5)) {
   e1=round1(q5[i],k, "E")
+  print(e1)
   e2=round2(e1,k, "E")
+  print(e2)
   d1=round1(e2,k,"D")
   d2=round2(d1,k,"D")
   d[i]=d2
 }
 d # the encrypted message
-print(unbinary(d))              #1356 2508 3889 2829 4010 1286 3661 4047 4047 4047 4010  631 2517 4010  609 2517 2179
-print(intToUtf8(unbinary(d)))   #????????\u0b0d??????????????????????\u09d5???g\u09d5\u883
+print(unbinary(d))              #87 105 114 101  32  36  50  48  48  48  32 116 111  32  66 111 98
+print(intToUtf8(unbinary(d)   #Wire $2000 to Bob8
+3
+## testing output
+print(round1('000001010111', "001101100", 'D')) #010111101011
+print(round2('000001010111', "001101100", 'D')) #100011010111
