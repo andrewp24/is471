@@ -84,7 +84,7 @@ newBlock = function(previous_block, transaction_str) {
   new_block$index = previous_block$index+1
   new_block$timestamp = Sys.time()
   new_block$data = transaction_str
-  new_block$previous_hash = hasher(previous_block)
+  new_block$previous_hash = previous_block$new_hash
   new_block$nonce = round(runif(1, min = 1, max = 2147483647))
   
   new_hash = hasher(block0)
