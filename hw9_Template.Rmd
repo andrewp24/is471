@@ -1,0 +1,159 @@
+---
+title: 'IS 471: Spring 2018'
+subtitle: Homework 9
+# author: Andrew Peterson (NA75257)
+output:
+  pdf_document:
+    df_print: kable
+    fig_caption: yes
+    highlight: tango
+    number_sections: yes
+  word_document: default
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(openssl)
+```
+
+
+
+Background
+==========
+
+Secure Hash Algorithm 1
+-----------------------
+
+use `sha1()` function from `openssl` library to calculate the SHA-1 hash of a value
+
+Reading a CSV file
+------------------
+
+Use `read.csv()` function to read a CSV file to a data-frame
+
+
+R DataFrame
+-----------
+
+A data frame is a table or a two-dimensional array-like structure in which each column contains values of one variable and each row contains one set of values from each column.
+
+Following are the characteristics of a data frame.
+
+* The column names should be non-empty.
+* The row names should be unique.
+* The data stored in a data frame can be of numeric, factor or character type.
+* Each column should contain same number of data items.
+
+
+Here is an example of a built in data-frame. I'm using `head()` to read the first few values of the data-frames
+```{r}
+head(mtcars)
+```
+
+### Indexing in Dataframe
+
+Here is the cell value from the first row, second column of mtcars.
+
+```{r}
+mtcars[1, 2] 
+```
+
+Moreover, we can use the row and column names instead of the numeric coordinates.
+
+```{r}
+mtcars["Mazda RX4", "cyl"] 
+```
+
+Lastly, the number of data rows in the data frame is given by the nrow function.
+
+```{r}
+nrow(mtcars)    # number of data rows 
+```
+
+And the number of columns of a data frame is given by the ncol function.
+
+```{r}
+ncol(mtcars)    # number of columns 
+```
+
+
+Questions
+=========
+Please write your code in the given **.Rmd** file and submit your script. Submitting screenshot or just only PDF/DOC file will result in an automatic penalty.
+
+
+**Question 1** (15 Points)
+
+Suppose that Alice, Bob, and Charlie are bidding for a camera. The estimated cost of the camera is between \$500-\$550. Each bidder first submits the hashed value of their bid with SHA-1. Assuming that the hash values for Alice and Bob are `ce09b127d48f83868a45645e246d3b52f4bdecbe` and `10d293a95915109e7675b011f404213902624f14` respectively, what is the minimum amount that Charlie needs to bid to win?
+
+```{r}
+i = 500
+alice_bid = 'ce09b127d48f83868a45645e246d3b52f4bdecbe'
+bob_bid = '10d293a95915109e7675b011f404213902624f14'
+dollar_amount = 500
+dollar_amount2 = 500
+min_bid = 500
+while (i <= 550){
+  dollar = toString(i)
+  hashed_dollar = sha1(dollar)
+
+  if (hashed_dollar == alice_bid){
+    i = 551
+  }
+  i = i + 1
+  dollar_amount = dollar_amount + 1
+}
+
+i = 500
+
+while (i <= 550){
+  dollar = toString(i)
+  hashed_dollar = sha1(dollar)
+
+  if (hashed_dollar == bob_bid){
+    i = 551
+  }
+  i = i + 1
+  dollar_amount2 = dollar_amount2 + 1
+}
+
+print(dollar_amount)
+print(dollar_amount2)
+
+if (dollar_amount >= dollar_amount2){
+  min_bid = dollar_amount + 1
+} else {
+  min_bid = dollar_amount2 + 1
+}
+print(min_bid)
+
+```
+**Question 2** (10 Points)
+
+Read the password file `hashed_passwords.csv` into a data-frame `df`. Read the dictionary `trudy_pass.csv` into a data-frame called `trudy.df`. Examine the content of the data-frames with `head()`.
+
+```{r}
+df = read.csv('hashed_passwords.csv')
+trudy.df = read.csv('trudy_pass.csv')
+
+head_df = head(df)
+head_trudy.df = head(trudy.df)
+print(head_df)
+print(head_trudy.df)
+```
+
+**Question 3** (10 Points)
+
+Calculate the hashes for each row in `trudy.df` by combining the password and salt. Use `paste0` for combining. Save them in a vector called `hashes`.
+
+```{r}
+hashes = paste0(trudy.df[[2]], trudy.df[[1]])
+hashes = sha1(hashes)
+
+```
+
+
+**Question 4** (15 Points)
+
+Find all passwords in Trudy's dictionary that also appears in the hashed password file. You will need to use `for` loop to achieve this. (Hint: you should get 300 matches)
+```{r}
+```
