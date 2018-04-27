@@ -148,6 +148,7 @@ Calculate the hashes for each row in `trudy.df` by combining the password and sa
 ```{r}
 hashes = paste0(trudy.df[[2]], trudy.df[[1]])
 hashes = sha1(hashes)
+print(head(hashes))
 
 ```
 
@@ -156,4 +157,20 @@ hashes = sha1(hashes)
 
 Find all passwords in Trudy's dictionary that also appears in the hashed password file. You will need to use `for` loop to achieve this. (Hint: you should get 300 matches)
 ```{r}
+matches = 0
+
+for(i in 1:length(hashes)){
+  for(row in 1:nrow(df)){
+    if(as.character(df[row, 2]) == as.character(hashes[i])){
+      #print("there was a success")
+      #print(paste("df :", as.character(df[row, 2])))
+      #print(paste("hashes: ", as.character(hashes[i])))
+      #print("--------------------")
+      matches = matches + 1
+    }
+  }
+}
+print(matches)
+
+
 ```
