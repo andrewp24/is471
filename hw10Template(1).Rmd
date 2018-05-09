@@ -1,0 +1,132 @@
+---
+title: 'IS 471: Spring 2018'
+subtitle: Homework 10
+# author: Andrew Peterson (NA75257)
+output:
+  pdf_document:
+    df_print: kable
+    fig_caption: yes
+    highlight: tango
+    number_sections: yes
+  word_document: default
+---
+```{r setup, include=FALSE}
+library(dplyr)
+library(Hmisc)
+```
+
+Questions
+=========
+Please write your code in the given **.Rmd** file and submit your script. Submitting screenshot or just only PDF/DOC file will result in an automatic penalty.
+
+
+
+**Question 1** (10 Points)
+
+* Load the `.csv` file with `read.csv` command into a data-frame `df`. Be sure to set `row.names = 1` so that the rows are named. 
+* What happens when you don't set this parameter while reading the file with `read.csv?` 
+* Use `describe()` function from `Hmisc` library to examine the `df`.
+
+```{r}
+df = read.csv("hw10_data(1).csv", row.names = 1)
+#without row.names, the names given in the csv would be another regular column with the header of X.
+describe(df)
+```
+
+**Question 2** (10 Points)
+
+* Set your seed to 33. [Hint: Use `set.seed()` function]
+* Create a random sample of size `20`. [Hint:Call `sample()` function `nrow(df)` and `size=20`, then use the resulting indices to take a subset of `df`. Save the subset in `sampled_df`.]
+* `describe()` the subset again. Do you think this subset is a good representation of the main data-set?
+* What do you think will happen if you don't set the seed to before sampling?
+
+```{r}
+set.seed(33)
+s = sample(nrow(df), size = 20)
+sampled_df <- df[s,]
+describe(sampled_df)
+# i think it can be pretty representative of most of the data. ipaddr was not the best, i assume because they aren't really numbers.
+#if we dont use a seed, it will be more random each time you use the function.
+```
+
+**Question 3** (5 Points)
+
+* Normalize the data with `scale()` function
+* Use `as.data.frame()` function on the scaled result and save it to a variable called `scaled_df`
+
+```{r}
+scaled_df = scale(sampled_df)
+scaled_df = as.data.frame(scaled_df)
+```
+
+
+**Question 4** (10 Points)
+
+Create a hierarchical clustering of the data. [Hint: first calculate the distance with `dist()` function, then use `hclust()` function on the distance and provide parameter `method = 'average'`, Refer to slide 11 of `lecture11.pptx` for an example]
+
+```{r}
+dis = dist(scaled_df)
+hclus = hclust(dis, method = 'average')
+```
+
+**Question 5** (5 Points)
+
+Display the dendrogram. [Hint: Use the `plot` function.]
+
+```{r}
+plot(hclus)
+```
+
+**Question 6** (10 Points)
+
+Select the best number of clusters. [Hint: You'll need to use `NbClust()` function from `NbClust` library. Refer to slide 12 of `lecture11.pptx` on the example of `NbClust()` function. You should get an output saying *According to the majority rule, the best number of clusters is {optimal number}*]
+
+```{r}
+library(NbClust)
+nc = NbClust(scaled_df, distance = "euclidean",min.nc = 2, max.nc = 15, method = "average")
+```
+
+**Question 7** (10 Points)
+
+Show the clusters in the dendrogram. [Hint: use `rect.hclust()` function, Refer to slide 13 of `lecture11.pptx` for an example, be sure to set the `k` parameter to the optimal value you got from the previous question.]
+
+```{r}
+plot(hclus)
+rect.hclust(hclus, k=15)
+```
+
+**Question 8** (20 Points)
+
+Create clusters using the k-means algorithm with the appropriate value of k.
+* First use `NbClust()` function to find the optimal number of cluster. Use `method = 'kmeans'` this time.
+* Use `kmeans()` function to create the clusters
+* Use `fviz_cluster()` from `factoextra` library to visualize your clusters. 
+
+[Hint: Refer to slide 13 of `lecture11.pptx` for an example]
+
+```{r}
+nc1 = NbClust(scaled_df, distance = "euclidean",min.nc = 2, max.nc = 15, method = "kmeans")
+kmean = kmeans(scaled_df, 2)
+library(factoextra)
+fviz_cluster(kmean, data=scaled_df, geom="point", stand = FALSE, frame.type="norm")
+
+```
+
+**Question 9** (20 Points)
+
+Create a PCA of the data and show the summary information of the PCs.
+
+* Install and load library `caret` and `e1071`
+* Transform your `scaled_df` data to PCA dimension by using the `preProcess()` function from `caret` library. Save the return value to a variable called `trans`. [Hint: first parameter will be `scaled_df` and second parameter will be `method=c('pca')`]
+* Show the rotation of the components [Hint: The `rotation` property of the `trans` object holds the value]. What do you think the rotations are doing?
+* Now calculate the principal components using `predict()` function. [Hint: It will take the transformation and your scaled data-frame as an input]
+
+```{r}
+library(caret)
+library(e1071)
+
+trans = preProcess(scaled_df, method=c('pca'))
+trans$rotation
+# rotations seem to maximize the sum of sqaures of the data, helps with correlation.
+predict(trans, scaled_df)
+```
